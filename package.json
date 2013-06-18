@@ -1,0 +1,23 @@
+{
+  "name": "firefox-debug",
+  "description": "Firefox remote debugging client",
+  "version": "0.1.0",
+  "author": "Heather Arthur <fayearthur@gmail.com>",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/harthur/node-firefox-debug.git"
+  },
+  "dependencies": {
+    "nomnom": "1.6.x",
+    "colors": "0.5.x"
+  },
+  "bin": {
+    "fxdebug": "./bin/cli.js"
+  },
+  "keywords": [
+    "firefox",
+    "debugger",
+    "remote debugging"
+  ]
+}
