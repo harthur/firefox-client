@@ -1,5 +1,11 @@
-var FirefoxClient = require("./index.js");
+var FirefoxClient = require("./lib/firefox-client.js");
 
-var client = FirefoxClient();
+var client = new FirefoxClient();
 
-client.connect();
+client.connect(function() {
+  client.getTabs(function(tabs) {
+    for (tab in tabs) {
+      console.log(tabs[tab].url);
+    }
+  });
+});
