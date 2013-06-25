@@ -1,12 +1,12 @@
-# firefox-debug
-`firefox-debug` is a [node](nodejs.org) library and command line utility for controlling a Firefox instance over the remote debugging protocol.
+# firefox-client
+`firefox-client` is a [node](nodejs.org) library and command line utility for controlling a Firefox instance over the remote debugging protocol.
 
 ## Install
 With [node.js](http://nodejs.org/) npm package manager:
 
-	npm install firefox-debug -g
+	npm install firefox-client -g
 
-You can now use `fxdebug` command from the command line.
+You can now use `fxclient` command from the command line.
 
 To connect to a Firefox instance, you first have to turn on remote debugging. Visit `about:config` in the url bar, and toggle the `devtools.debugger.remote-enabled` preference to `true`. You'll only have to do this once.
 
@@ -18,26 +18,65 @@ listen 6000
 
 ## API
 
-Use the firefox-debug API from your node program with:
+Use the firefox-client API from your node program with:
 
 ```javascript
-var createClient = require("firefox-debug");
+var FirefoxClient = require("firefox-client");
 
-var options = {
-  host: "localhost",
-  port: 6000
-}
+var client = new FirefoxClient(options);
 
-var client = createClient(options, function() {
-
+client.connect({ port: 6000 }, function() {
+  client.listTabs(function(tabs) {
+    console.log("first tab:", tabs[0].url);
+  });
 });
-
 ```
+
 
 Most of the client API methods relate to the Firefox (web) developer tools.
 
+### FirefoxClient
 
+#### connect
 
-## More Details
+Create a remote debugging connection. Takes a hash of options (`host` and `port`), and
+a callback as arguments:
 
+```javascript
+client.connect(function() {
+  console.log("connection established")
+});
+```
+
+#### listTabs
+
+Get a list of all the currently open tabs (as `Tab` objects):
+
+client.listTabs(function(tabs) {
+   console.log("first tab:", tabs[0].url);
+})
+
+### Tab
+
+After getting a tab object from `listTabs`. You can access a bunch of per-tab APIs
+
+### StyleSheets
+
+#### listStyleSheets
+
+List all the stylesheets in the current document of the tab.
+
+```javascript
+tab.StyleSheets.listStyleSheets(function(sheets) {
+  console.log("first stylesheet:", sheets[0].href);
+})
+```
+
+#### addStyleSheet
+
+Create a new stylesheet with the given text and append it the document as an inline stylesheet:
+
+```javascript
+tab.StyleSheets.addStyleSheet("* { color: red };");
+```
 
