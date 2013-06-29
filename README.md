@@ -4,9 +4,7 @@
 ## Install
 With [node.js](http://nodejs.org/) npm package manager:
 
-	npm install firefox-client -g
-
-You can now use `fxclient` command from the command line.
+	npm install firefox-client
 
 To connect to a Firefox instance, you first have to turn on remote debugging. Visit `about:config` in the url bar, and toggle the `devtools.debugger.remote-enabled` preference to `true`. You'll only have to do this once.
 
@@ -15,6 +13,10 @@ Then start listening for connection on a port using the Firefox command line (**
 ```
 listen 6000
 ```
+
+## Compatibility
+
+This library is compatible with Firefox [Nightly](http://nightly.mozilla.org/).
 
 ## API
 
