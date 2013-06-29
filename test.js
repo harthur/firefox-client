@@ -41,9 +41,14 @@ function testDOM(tab) {
         console.log(siblings.length);
       });
 
-      node.previousSibling(function(sibling) {
+      node.nextSibling(function(sibling) {
         console.log(sibling.nodeName);
       });
+
+      var className = node.getAttribute("class");
+      console.log("class: ", className);
+
+      node.setAttribute("class", "no-class", console.log)
     })
   })
 }
