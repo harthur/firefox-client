@@ -1,9 +1,8 @@
-var FirefoxClient = require("./lib/firefox-client.js");
+var FirefoxClient = require("./lib/browser.js");
 
 var client = new FirefoxClient();
 
 client.connect(function() {
-  console.log("going to list tabs");
   client.listTabs(function(tabs) {
     var tab = tabs[0];
     testTab(tab);
@@ -34,7 +33,7 @@ function testDOM(tab) {
   tab.DOM.document(function(doc) {
     doc.querySelector(".event", function(node) {
       node.outerHTML(function(html) {
-        console.log(html);
+        //console.log(html);
       });
 
       node.siblings(function(siblings) {
@@ -48,7 +47,9 @@ function testDOM(tab) {
       var className = node.getAttribute("class");
       console.log("class: ", className);
 
-      node.setAttribute("class", "no-class", console.log)
+      node.setAttribute("class", "no-class", function() {
+        console.log("attr set");
+      })
     })
   })
 }
