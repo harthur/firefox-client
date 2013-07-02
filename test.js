@@ -13,7 +13,8 @@ function testTab(tab) {
   //testReload(tab);
   //testNavigateTo(tab);
   //testDOM(tab);
-  testLogs(tab);
+  //testLogs(tab);
+  testNetwork(tab);
 }
 
 function testReload(tab) {
@@ -22,6 +23,35 @@ function testReload(tab) {
 
 function testNavigateTo(tab) {
   tab.navigateTo("http://www.google.com");
+}
+
+function testNetwork(tab) {
+  tab.Network.on("network-event", function(event) {
+    console.log("network event: ", event.url);
+  });
+
+  tab.Network.startLogging();
+
+  var request = {
+    url: "https://github.com/harthur/some-json/raw/gh-pages/1.json",
+    method: "GET",
+    headers: [{name: "test-header", value: "test-value"}]
+  };
+
+  tab.Network.sendHTTPRequest(request, function(networkEvent) {
+    networkEvent.getResponseHeaders(function(message) {
+        console.log("got event headers:" +  JSON.stringify(message));
+    })
+
+    networkEvent.on("update", function(type, data) {
+      console.log("on update " + type);
+      if (type == "responseContent") {
+        networkEvent.getResponseContent(function(message) {
+          console.log("got event headers:" +  JSON.stringify(message));
+        })
+      }
+    })
+  });
 }
 
 function testLogs(tab) {
