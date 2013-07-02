@@ -12,7 +12,8 @@ client.connect(function() {
 function testTab(tab) {
   //testReload(tab);
   //testNavigateTo(tab);
-  testDOM(tab);
+  //testDOM(tab);
+  testLogs(tab);
 }
 
 function testReload(tab) {
@@ -21,6 +22,20 @@ function testReload(tab) {
 
 function testNavigateTo(tab) {
   tab.navigateTo("http://www.google.com");
+}
+
+function testLogs(tab) {
+  tab.Logs.getLogs(function(resp) {
+    console.log("logs:", resp);
+  });
+
+  tab.Logs.on("page-error", function(error) {
+    console.log("received error: " + error.errorMessage);
+  });
+  tab.Logs.on("console-api-call", function(call) {
+    console.log("made console call: console." + call.level + "()");
+  });
+  tab.Logs.startLogging();
 }
 
 function testStyleSheets(tab) {
