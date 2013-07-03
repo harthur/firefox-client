@@ -14,7 +14,8 @@ function testTab(tab) {
   //testNavigateTo(tab);
   //testDOM(tab);
   //testLogs(tab);
-  testNetwork(tab);
+  //testNetwork(tab);
+  testConsole(tab);
 }
 
 function testReload(tab) {
@@ -23,6 +24,24 @@ function testReload(tab) {
 
 function testNavigateTo(tab) {
   tab.navigateTo("http://www.google.com");
+}
+
+function testConsole(tab) {
+  tab.Console.evaluateJS("window", function(resp) {
+    var result = resp.result;
+
+  //  result.ownPropertyNames(function(names) {
+  //    console.log("num properties: ", names.length);
+  //  });
+
+    result.prototype(function(resp) {
+      console.log(resp);
+    })
+
+    result.propertyValue('document', function(value) {
+      console.log("document value:", value.class);
+    })
+  });
 }
 
 function testNetwork(tab) {
