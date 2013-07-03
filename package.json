@@ -12,9 +12,6 @@
     "nomnom": "1.6.x",
     "colors": "0.5.x"
   },
-  "bin": {
-    "fxclient": "./bin/cli.js"
-  },
   "keywords": [
     "firefox",
     "debugger",
