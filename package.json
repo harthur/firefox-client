@@ -12,6 +12,10 @@
     "nomnom": "1.6.x",
     "colors": "0.5.x"
   },
+  "devDependencies": {
+    "connect": "~2.8.2",
+    "mocha": "~1.12.0"
+  },
   "keywords": [
     "firefox",
     "debugger",
