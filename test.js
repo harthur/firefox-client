@@ -10,12 +10,19 @@ client.connect(function() {
 });
 
 function testTab(tab) {
+  testAttach(tab);
   //testReload(tab);
   //testNavigateTo(tab);
   //testDOM(tab);
   //testLogs(tab);
   //testNetwork(tab);
-  testConsole(tab);
+  //testConsole(tab);
+}
+
+function testAttach(tab) {
+  tab.attach(function(resp) {
+    console.log("attach resp:", resp);
+  });
 }
 
 function testReload(tab) {
