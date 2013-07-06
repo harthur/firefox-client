@@ -27,6 +27,7 @@ describe('"page-error" event', function() {
       assert.equal(event.lineNumber, 10);
       assert.equal(event.columnNumber, 0);
       assert.ok(event.exception);
+
       done();
     });
 
@@ -64,8 +65,5 @@ describe('"console-api-call" event', function() {
 })
 
 after(function() {
-  Logs.removeAllListeners('console-api-call');
-  Logs.removeAllListeners('page-error');
-
   Logs.stopLogging();
 })
