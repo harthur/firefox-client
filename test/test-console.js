@@ -22,7 +22,7 @@ describe('evaluateJS()', function() {
 
   it('should evaluate expr to boolean', function(done) {
     Console.evaluateJS('!!window', function(resp) {
-      assert.equal(resp.result, true);
+      assert.strictEqual(resp.result, true);
       done();
     })
   })
