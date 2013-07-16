@@ -11,13 +11,49 @@ before(function(done) {
     tab = aTab;
     Console = aTab.Console;
 
-    Console.startLogging(function() {
+    Console.startListening(function() {
       done();
     })
   });
 });
 
-// Logs - startLogging(), stopLogging(), event:page-error, event:console-api-call
+// Console - startLogging(), stopLogging(), getCachedMessages(),
+// clearCachedMessages(), event:page-error, event:console-api-call
+
+describe('getCachedMessages()', function() {
+  it('should get messages from before listening', function(done) {
+    Console.getCachedLogs(function(messages) {
+      var hasLog = messages.some(function(message) {
+        return message.level == "log";
+      })
+      assert.ok(hasLog);
+
+      var hasDir = messages.some(function(message) {
+        return message.level == "dir";
+      })
+      assert.ok(hasDir);
+
+      var hasError = messages.some(function(message) {
+        return message.errorMessage == "ReferenceError: foo is not defined";
+      })
+      assert.ok(hasError);
+      done();
+    });
+  })
+})
+
+describe('clearCachedMessages()', function() {
+  it('should clear cached messages', function(done) {
+    Console.clearCachedLogs(function() {
+      Console.getCachedLogs(function(messages) {
+        // The error message should be left
+        assert.equal(messages.length, 1);
+        assert.equal(messages[0].errorMessage, "ReferenceError: foo is not defined")
+        done();
+      })
+    });
+  })
+})
 
 describe('"page-error" event', function() {
   it('should receive "page-error" event with message', function(done) {
@@ -65,5 +101,5 @@ describe('"console-api-call" event', function() {
 })
 
 after(function() {
-  Console.stopLogging();
+  Console.stopListening();
 })

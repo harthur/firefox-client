@@ -14,6 +14,8 @@ Then start listening for connection on a port using the Firefox command line (**
 listen 6000
 ```
 
+The first argument to the `listen` command is the port number.
+
 ## Compatibility
 
 This library is compatible with Firefox [Nightly](http://nightly.mozilla.org/).
@@ -34,8 +36,37 @@ client.connect({ port: 6000 }, function() {
 });
 ```
 
+### Objects
 
-Most of the client API methods relate to the Firefox (web) developer tools.
+#### FirefoxClient
+Methods: connect(), listTabs()
+
+#### Tab
+Methods: reload(), navigateTo(), attach(), detach()
+Events: "navigate", "before-navigate"
+
+#### Console
+Methods: evaluateJS(), startListening(), stopListening(), getCachedLogs()
+Events: "page-error", console-api-call"
+
+#### JSObject
+Properties: class, name, displayName
+Methods: ownPropertyNames(), propertyDescriptor(), prototype()
+
+#### DOM
+Methods: document(), documentElement()
+
+#### DOMNode
+Methods: parentNode(), parent(), siblings(), nextSibling(), previousSibling(), querySelector(), querySelectorAll(), innerHTML(), outerHTML(), getAttribute(), setAttribute()
+
+#### Network
+Methods: startLogging(), stopLogging(), sendHTTPRequest()
+Events: "network-event"
+
+#### NetworkEvent
+Properties: url, method, isXHR
+Methods: getRequestHeaders(), getRequestCookies(), getRequestPostData(), getResponseHeaders(), getResponseCookies(), getResponseContent(), getEventTimings()
+Events: "update"
 
 ### FirefoxClient
 
@@ -55,30 +86,45 @@ client.connect(function() {
 Get a list of all the currently open tabs (as `Tab` objects):
 
 client.listTabs(function(tabs) {
-   console.log("first tab:", tabs[0].url);
+   var tab = tabs[0]
+   console.log("first tab:", tab.url);
 })
 
 ### Tab
 
 After getting a tab object from `listTabs`. You can access a bunch of per-tab APIs
 
-### StyleSheets
+#### reload
 
-#### listStyleSheets
+Reload the tab:
 
-List all the stylesheets in the current document of the tab.
+```javascript```
+tab.reload();
+```
 
-```javascript
-tab.StyleSheets.listStyleSheets(function(sheets) {
-  console.log("first stylesheet:", sheets[0].href);
+#### navigateTo
+
+Navigate tab to a new page:
+
+```javascript```
+tab.navigateTo("http://github.com");
+```
+
+### Console
+
+
+#### evaluateJS
+
+```javascript```
+tab.Console.evaluateJS("window", function(resp) {
+  var windowObj = resp.result;
 })
 ```
 
-#### addStyleSheet
+#### startLogging
 
-Create a new stylesheet with the given text and append it the document as an inline stylesheet:
 
-```javascript
-tab.StyleSheets.addStyleSheet("* { color: red };");
-```
+### DOM
+
+### Network
 

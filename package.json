@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "nomnom": "1.6.x",
-    "colors": "0.5.x"
+    "colors": "0.5.x",
+    "js-select": "~0.6.0"
   },
   "devDependencies": {
     "connect": "~2.8.2",

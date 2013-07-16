@@ -9,8 +9,22 @@ client.connect(function() {
   });
 });
 
+function testCachedLogs(tab) {
+  tab.Console.startLogging(function() {
+    console.log("started logging");
+    tab.Console.getCachedLogs(function(resp) {
+      console.log("cached", resp);
+    });
+    tab.Console.getCachedLogs(function(resp) {
+      console.log("cached", resp);
+    });
+
+  })
+}
+
 function testTab(tab) {
-  testAttach(tab);
+  testCachedLogs(tab);
+  //testAttach(tab);
   //testReload(tab);
   //testNavigateTo(tab);
   //testDOM(tab);
