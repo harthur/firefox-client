@@ -9,9 +9,12 @@ With [node.js](http://nodejs.org/) npm package manager:
 ## Connecting
 To connect to a Firefox instance:
 
-1) Turn on remote debugging. Visit `about:config` in the url bar, and toggle the `devtools.debugger.remote-enabled` preference to `true`. (You'll only have to do this once)
+1) Turn on remote debugging:
+  * Visit `about:config` in the url bar
+  * Toggle the `devtools.debugger.remote-enabled` pref to `true`. (You'll only have to do this once)
 
-2) Listen for a connection. Open the Firefox command line (**Tools** > **Web Developer** > **Developer Toolbar**). Start the server by entering this command:
+2) Listen for a connection:
+  * Open the Firefox command line (**Tools** > **Web Developer** > **Developer Toolbar**).* Start a server by entering this command:
 
 ```
 listen 6000
@@ -25,14 +28,14 @@ This library is compatible with Firefox [Nightly](http://nightly.mozilla.org/).
 
 ## Usage
 
-Use the firefox-client API from your node program with:
+Use firefox-client from your node program with:
 
 ```javascript
 var FirefoxClient = require("firefox-client");
 
-var client = new FirefoxClient(options);
+var client = new FirefoxClient();
 
-client.connect({ port: 6000 }, function() {
+client.connect(6000, function() {
   client.listTabs(function(tabs) {
     console.log("first tab:", tabs[0].url);
   });
@@ -40,8 +43,6 @@ client.connect({ port: 6000 }, function() {
 ```
 
 ### API
-
-The API has a few per-tab modules. These include `Console` and `Network`. `DOM` and `StyleSheets` modules are still experimental, but you can see their current state under the `lib` directory in this repository. `Debugger` and `Profiler`
 
 ### Objects
 
