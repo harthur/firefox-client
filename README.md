@@ -1,14 +1,17 @@
 # firefox-client
-`firefox-client` is a [node](nodejs.org) library and command line utility for controlling a Firefox instance over the remote debugging protocol.
+`firefox-client` is a [node](nodejs.org) library for remote debugging Firefox.
 
 ## Install
 With [node.js](http://nodejs.org/) npm package manager:
 
 	npm install firefox-client
 
-To connect to a Firefox instance, you first have to turn on remote debugging. Visit `about:config` in the url bar, and toggle the `devtools.debugger.remote-enabled` preference to `true`. You'll only have to do this once.
+## Connecting
+To connect to a Firefox instance:
 
-Then start listening for connection on a port using the Firefox command line (**Tools** > **Web Developer** > **Developer Toolbar**). Start the server by entering this command:
+1) Turn on remote debugging. Visit `about:config` in the url bar, and toggle the `devtools.debugger.remote-enabled` preference to `true`. (You'll only have to do this once)
+
+2) Listen for a connection. Open the Firefox command line (**Tools** > **Web Developer** > **Developer Toolbar**). Start the server by entering this command:
 
 ```
 listen 6000
@@ -20,7 +23,7 @@ The first argument to the `listen` command is the port number.
 
 This library is compatible with Firefox [Nightly](http://nightly.mozilla.org/).
 
-## API
+## Usage
 
 Use the firefox-client API from your node program with:
 
@@ -35,6 +38,10 @@ client.connect({ port: 6000 }, function() {
   });
 });
 ```
+
+### API
+
+The API has a few per-tab modules. These include `Console` and `Network`. `DOM` and `StyleSheets` modules are still experimental, but you can see their current state under the `lib` directory in this repository. `Debugger` and `Profiler`
 
 ### Objects
 
@@ -51,13 +58,7 @@ Events: "page-error", console-api-call"
 
 #### JSObject
 Properties: class, name, displayName
-Methods: ownPropertyNames(), propertyDescriptor(), prototype()
-
-#### DOM
-Methods: document(), documentElement()
-
-#### DOMNode
-Methods: parentNode(), parent(), siblings(), nextSibling(), previousSibling(), querySelector(), querySelectorAll(), innerHTML(), outerHTML(), getAttribute(), setAttribute()
+Methods: ownPropertyNames(), ownPropertyDescriptor(), ownProperties(), prototype()
 
 #### Network
 Methods: startLogging(), stopLogging(), sendHTTPRequest()

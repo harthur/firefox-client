@@ -55,6 +55,31 @@ describe('sendHTTPRequest()', function() {
 // getResponseHeaders(), getResponseCookies(), getResponseContent(), getEventTimings()
 // event:update
 
+
+describe('getRequestHeaders(', function() {
+  it('should get request headers', function(done) {
+    Network.once('network-event', function(netEvent) {
+      netEvent.on("update", function(type, event) {
+        if (type != "requestHeaders") {
+          return;
+        }
+        assert.equal(event.headers, 10);
+
+        netEvent.getRequestHeaders(function(resp) {
+          assert.equal(resp.length, 10);
+          var found = resp.some(function(header) {
+            return header.name == "test-header" &&
+                   header.value == "test-value";
+          })
+          assert.ok(found, "contains that header we sent");
+          done();
+        })
+      })
+    });
+    Console.evaluateJS("sendRequest()");
+  })
+})
+
 // TODO: NetworkEvent tests
 
 after(function() {
