@@ -1,21 +1,35 @@
 var assert = require('assert'),
     FirefoxClient = require("../index");
 
+var tab;
+
 exports.loadTab = function(url, callback) {
+  getFirstTab(function(tab) {
+    tab.navigateTo(url);
+
+    tab.once("navigate", function() {
+      callback(tab);
+    });
+  })
+};
+
+
+function getFirstTab(callback) {
+  if (tab) {
+    return callback(tab);
+  }
   var client = new FirefoxClient();
 
   client.connect(function() {
-    client.listTabs(function(tabs) {
-      // take over the first tab
-      var tab = tabs[0];
+    client.listTabs(function(err, tabs) {
+      if (err) throw err;
 
-      tab.attach(function() {
-        tab.navigateTo(url);
-      });
+      tab = tabs[0];
 
-      tab.once("navigate", function() {
+      tab.attach(function(err) {
+        if (err) throw err;
         callback(tab);
-      });
+      })
     });
   });
-};
+}

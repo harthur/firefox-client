@@ -21,10 +21,9 @@ visit the url the server tells you to visit.
 Finally, run the tests with:
 
 ```
-mocha . --timeout 10000
+mocha test-dom.js --timeout 10000
 ````
 
 The increased timeout is to give you enough time to manually verify the incoming connection in Firefox.
 
-
-
+Right now you have to run each test individually, until Firefox [bug 891003](https://bugzilla.mozilla.org/show_bug.cgi?id=891003) is fixed.

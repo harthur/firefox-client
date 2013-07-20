@@ -22,7 +22,9 @@ before(function(done) {
 
 describe('getCachedMessages()', function() {
   it('should get messages from before listening', function(done) {
-    Console.getCachedLogs(function(messages) {
+    Console.getCachedLogs(function(err, messages) {
+      assert.strictEqual(err, null);
+
       var hasLog = messages.some(function(message) {
         return message.level == "log";
       })
@@ -45,7 +47,8 @@ describe('getCachedMessages()', function() {
 describe('clearCachedMessages()', function() {
   it('should clear cached messages', function(done) {
     Console.clearCachedLogs(function() {
-      Console.getCachedLogs(function(messages) {
+      Console.getCachedLogs(function(err, messages) {
+        assert.strictEqual(err, null);
         // The error message should be left
         assert.equal(messages.length, 1);
         assert.equal(messages[0].errorMessage, "ReferenceError: foo is not defined")

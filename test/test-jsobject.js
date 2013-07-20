@@ -8,13 +8,12 @@ var func;
 before(function(done) {
   utils.loadTab('dom.html', function(aTab) {
     Console = aTab.Console;
-    Console.evaluateJS('x = {a: 2, b: {c: 3}}', function(resp) {
+    Console.evaluateJS('x = {a: 2, b: {c: 3}}', function(err, resp) {
       obj = resp.result;
 
       var input = 'y = function testfunc(a, b) { return a + b; }';
-      Console.evaluateJS(input, function(resp) {
+      Console.evaluateJS(input, function(err, resp) {
         func = resp.result;
-        console.log(func);
         done();
       })
     });
@@ -25,7 +24,8 @@ before(function(done) {
 
 describe('ownPropertyNames()', function() {
   it('should fetch property names', function(done) {
-    obj.ownPropertyNames(function(names) {
+    obj.ownPropertyNames(function(err, names) {
+      assert.strictEqual(err, null);
       assert.deepEqual(names, ['a', 'b']);
       done();
     })
@@ -34,8 +34,8 @@ describe('ownPropertyNames()', function() {
 
 describe('ownPropertyDescriptor()', function() {
   it('should fetch descriptor for property', function(done) {
-    obj.ownPropertyDescriptor('a', function(desc) {
-      console.log("desc", desc);
+    obj.ownPropertyDescriptor('a', function(err, desc) {
+      assert.strictEqual(err, null);
       testDescriptor(desc);
       assert.equal(desc.value, 2);
       done();
@@ -53,7 +53,8 @@ describe('ownPropertyDescriptor()', function() {
 
 describe('ownProperties()', function() {
   it('should fetch all own properties and descriptors', function(done) {
-    obj.ownProperties(function(props) {
+    obj.ownProperties(function(err, props) {
+      assert.strictEqual(err, null);
       testDescriptor(props.a);
       assert.equal(props.a.value, 2);
 
@@ -66,7 +67,8 @@ describe('ownProperties()', function() {
 
 describe('prototype()', function() {
   it('should fetch prototype as an object', function(done) {
-    obj.prototype(function(proto) {
+    obj.prototype(function(err, proto) {
+      assert.strictEqual(err, null);
       assert.ok(proto.ownProperties, "prototype has JSObject methods");
       done();
     })

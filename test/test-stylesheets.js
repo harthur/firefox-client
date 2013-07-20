@@ -8,7 +8,8 @@ var styleSheet;
 before(function(done) {
   utils.loadTab('stylesheets.html', function(aTab) {
     StyleSheets = aTab.StyleSheets;
-    StyleSheets.listStyleSheets(function(sheets) {
+    StyleSheets.listStyleSheets(function(err, sheets) {
+      assert.strictEqual(err, null);
       styleSheet = sheets[1];
       done();
     })
@@ -19,7 +20,9 @@ before(function(done) {
 
 describe('listStyleSheets()', function() {
   it('should list all the stylesheets', function(done) {
-    StyleSheets.listStyleSheets(function(sheets) {
+    StyleSheets.listStyleSheets(function(err, sheets) {
+      assert.strictEqual(err, null);
+
       var hrefs = sheets.map(function(sheet) {
         assert.ok(sheet.update, "sheet has Stylesheet methods");
         return path.basename(sheet.href);
@@ -32,7 +35,10 @@ describe('listStyleSheets()', function() {
 
 describe('addStyleSheet()', function() {
   it('should add a new stylesheet', function(done) {
-    StyleSheets.addStyleSheet("div { font-weight: bold; }", function(sheet) {
+    var text = "div { font-weight: bold; }";
+
+    StyleSheets.addStyleSheet(text, function(err, sheet) {
+      assert.strictEqual(err, null);
       assert.ok(sheet.update, "sheet has Stylesheet methods");
       assert.equal(sheet.ruleCount, 1);
       done();
@@ -52,8 +58,10 @@ describe('StyleSheet', function() {
 
 describe('StyleSheet.update()', function() {
   it('should update stylesheet', function(done) {
-    styleSheet.update("main { color: red; }", function(resp) {
-      console.log("update response:", resp);
+    var text = "main { color: red; }";
+
+    styleSheet.update(text, function(err, resp) {
+      assert.strictEqual(err, null);
       // TODO: assert.equal(styleSheet.ruleCount, 1);
       done();
     })

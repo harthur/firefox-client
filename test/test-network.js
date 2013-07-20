@@ -14,7 +14,8 @@ before(function(done) {
     Network = aTab.Network;
     Console = aTab.Console;
 
-    Network.startLogging(function() {
+    Network.startLogging(function(err) {
+      assert.strictEqual(err, null);
       done();
     })
   });
@@ -44,7 +45,8 @@ describe('sendHTTPRequest()', function() {
       headers: [{name: "test-header", value: "test-value"}]
     };
 
-    Network.sendHTTPRequest(request, function(netEvent) {
+    Network.sendHTTPRequest(request, function(err, netEvent) {
+      assert.strictEqual(err, null);
       assert.ok(netEvent.getResponseHeaders, "event has NetworkEvent methods");
       done();
     });
@@ -63,10 +65,8 @@ describe('getRequestHeaders(', function() {
         if (type != "requestHeaders") {
           return;
         }
-        assert.equal(event.headers, 10);
 
-        netEvent.getRequestHeaders(function(resp) {
-          assert.equal(resp.length, 10);
+        netEvent.getRequestHeaders(function(err, resp) {
           var found = resp.some(function(header) {
             return header.name == "test-header" &&
                    header.value == "test-value";
@@ -83,5 +83,7 @@ describe('getRequestHeaders(', function() {
 // TODO: NetworkEvent tests
 
 after(function() {
-  Network.stopLogging();
+  Network.stopLogging(function(err) {
+    assert.strictEqual(err, null);
+  });
 })
