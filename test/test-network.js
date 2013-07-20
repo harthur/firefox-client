@@ -2,8 +2,6 @@ var assert = require("assert"),
     path = require("path"),
     utils = require("./utils");
 
-var colors = require("colors");
-
 var tab;
 var Network;
 var Console;

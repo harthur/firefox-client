@@ -1,8 +1,6 @@
 var assert = require("assert"),
     utils = require("./utils");
 
-    var colors = require("colors");
-
 var doc;
 var DOM;
 var node;
