@@ -7,24 +7,14 @@ With [node.js](http://nodejs.org/) npm package manager:
 	npm install firefox-client
 
 ## Connecting
-To connect to a Firefox instance:
+1. Enable remote debugging (You'll only have to do this once)
+ 1. Open the DevTools. **Web Developer** > **Toggle Tools**
+ 2. Visit the settings panel (gear icon)
+ 3. Check "Enable remote debugging" under Advanced Settings
 
-1. Turn on remote debugging in Firefox:
-  * Visit `about:config` in the url bar
-  * Toggle the `devtools.debugger.remote-enabled` pref to `true`. (You'll only have to do this once)
-
-2. Listen for a connection:
-  * Open the Firefox command line (**Tools** > **Web Developer** > **Developer Toolbar**).* Start a server by entering this command:
-
-```
-listen 6000
-```
-
-The first argument to the `listen` command is the port number.
-
-## Compatibility
-
-This library is compatible with Firefox [Nightly](http://nightly.mozilla.org/).
+2. Listen for a connection
+ 1. Open the Firefox command line with **Tools** > **Web Developer** > **Developer Toolbar**. 
+ 2. Start a server by entering this command: `listen 6000` (where `6000` is the port number)
 
 ## Usage
 
@@ -36,11 +26,15 @@ var FirefoxClient = require("firefox-client");
 var client = new FirefoxClient();
 
 client.connect(6000, function() {
-  client.listTabs(function(tabs) {
+  client.listTabs(function(err, tabs) {
     console.log("first tab:", tabs[0].url);
   });
 });
 ```
+
+## Compatibility
+
+This library is compatible with [Firefox Nightly](http://nightly.mozilla.org/).
 
 ### API
 
