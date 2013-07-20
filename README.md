@@ -9,11 +9,11 @@ With [node.js](http://nodejs.org/) npm package manager:
 ## Connecting
 To connect to a Firefox instance:
 
-1) Turn on remote debugging:
+1. Turn on remote debugging in Firefox:
   * Visit `about:config` in the url bar
   * Toggle the `devtools.debugger.remote-enabled` pref to `true`. (You'll only have to do this once)
 
-2) Listen for a connection:
+2. Listen for a connection:
   * Open the Firefox command line (**Tools** > **Web Developer** > **Developer Toolbar**).* Start a server by entering this command:
 
 ```
