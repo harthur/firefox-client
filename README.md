@@ -13,7 +13,7 @@ With [node.js](http://nodejs.org/) npm package manager:
  3. Check "Enable remote debugging" under Advanced Settings
 
 2. Listen for a connection
- 1. Open the Firefox command line with **Tools** > **Web Developer** > **Developer Toolbar**. 
+ 1. Open the Firefox command line with **Tools** > **Web Developer** > **Developer Toolbar**.
  2. Start a server by entering this command: `listen 6000` (where `6000` is the port number)
 
 ## Usage
@@ -27,7 +27,11 @@ var client = new FirefoxClient();
 
 client.connect(6000, function() {
   client.listTabs(function(err, tabs) {
-    console.log("first tab:", tabs[0].url);
+    var tab = tabs[0];
+
+    tab.Console.evaluateJS("6 + 7", function(resp) {
+      console.log("result:", resp.result);
+    });
   });
 });
 ```
@@ -38,89 +42,37 @@ This library is compatible with [Firefox Nightly](http://nightly.mozilla.org/).
 
 ### API
 
-### Objects
+A `FirefoxClient` is the entry point to the API. After connecting, get a `Tab` object with `listTabs()` or `selectedTab()`. Once you have a `Tab`, you can call methods and listen to events from the tab's modules, `Console` or `Network`. There are also experimental tab modules `DOM` and `StyleSheets`, see their implementations in the `lib` directory.
+
+Summary of the offerings of the modules and objects:
 
 #### FirefoxClient
-Methods: connect(), listTabs()
+Methods: connect(), listTabs(), selectedTab()
 
 #### Tab
 Methods: reload(), navigateTo(), attach(), detach()
+
 Events: "navigate", "before-navigate"
 
-#### Console
+#### Tab.Console
 Methods: evaluateJS(), startListening(), stopListening(), getCachedLogs()
+
 Events: "page-error", console-api-call"
 
 #### JSObject
 Properties: class, name, displayName
+
 Methods: ownPropertyNames(), ownPropertyDescriptor(), ownProperties(), prototype()
 
-#### Network
+#### Tab.Network
 Methods: startLogging(), stopLogging(), sendHTTPRequest()
+
 Events: "network-event"
 
 #### NetworkEvent
 Properties: url, method, isXHR
+
 Methods: getRequestHeaders(), getRequestCookies(), getRequestPostData(), getResponseHeaders(), getResponseCookies(), getResponseContent(), getEventTimings()
+
 Events: "update"
-
-### FirefoxClient
-
-#### connect
-
-Create a remote debugging connection. Takes a hash of options (`host` and `port`), and
-a callback as arguments:
-
-```javascript
-client.connect(function() {
-  console.log("connection established")
-});
-```
-
-#### listTabs
-
-Get a list of all the currently open tabs (as `Tab` objects):
-
-client.listTabs(function(tabs) {
-   var tab = tabs[0]
-   console.log("first tab:", tab.url);
-})
-
-### Tab
-
-After getting a tab object from `listTabs`. You can access a bunch of per-tab APIs
-
-#### reload
-
-Reload the tab:
-
-```javascript```
-tab.reload();
-```
-
-#### navigateTo
-
-Navigate tab to a new page:
-
-```javascript```
-tab.navigateTo("http://github.com");
-```
-
-### Console
-
-
-#### evaluateJS
-
-```javascript```
-tab.Console.evaluateJS("window", function(resp) {
-  var windowObj = resp.result;
-})
-```
-
-#### startLogging
-
-
-### DOM
-
-### Network
 

@@ -59,10 +59,9 @@ describe('sendHTTPRequest()', function() {
 describe('getRequestHeaders(', function() {
   it('should get request headers', function(done) {
     Network.once('network-event', function(netEvent) {
-      netEvent.on("update", function(type, event) {
-        if (type != "requestHeaders") {
-          return;
-        }
+      netEvent.on("request-headers", function(type, event) {
+        assert.ok(event.headers);
+        assert.ok(event.headersSize);
 
         netEvent.getRequestHeaders(function(err, resp) {
           var found = resp.some(function(header) {
