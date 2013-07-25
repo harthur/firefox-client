@@ -3,7 +3,7 @@ var FirefoxClient = require("./lib/browser.js");
 var client = new FirefoxClient();
 
 client.connect(function() {
-  client.listTabs(function(tabs) {
+  client.listTabs(function(err, tabs) {
     var tab = tabs[0];
     testTab(tab);
   });
@@ -12,10 +12,10 @@ client.connect(function() {
 function testCachedLogs(tab) {
   tab.Console.startLogging(function() {
     console.log("started logging");
-    tab.Console.getCachedLogs(function(resp) {
+    tab.Console.getCachedLogs(function(err, resp) {
       console.log("cached", resp);
     });
-    tab.Console.getCachedLogs(function(resp) {
+    tab.Console.getCachedLogs(function(err, resp) {
       console.log("cached", resp);
     });
 
@@ -23,9 +23,9 @@ function testCachedLogs(tab) {
 }
 
 function testTab(tab) {
-  testCachedLogs(tab);
+  //testCachedLogs(tab);
   //testAttach(tab);
-  //testReload(tab);
+  testReload(tab);
   //testNavigateTo(tab);
   //testDOM(tab);
   //testLogs(tab);
@@ -40,7 +40,20 @@ function testAttach(tab) {
 }
 
 function testReload(tab) {
-  tab.reload();
+  tab.DOM.document(function(err, doc) {
+    console.log("hola", doc.actor);
+  });
+  tab.attach(function(err, resp) {
+    if (err) throw err;
+
+    tab.on("navigate", function() {
+      tab.DOM.document(function(err, doc) {
+        if (err) throw err.message;
+        console.log("hola again", doc.actor);
+      });
+    })
+    tab.reload();
+  });
 }
 
 function testNavigateTo(tab) {

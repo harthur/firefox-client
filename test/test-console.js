@@ -46,9 +46,9 @@ describe('evaluateJS()', function() {
   })
 
   it('should evaluate to undefined', function(done) {
-    Console.evaluateJS('x = {a: 2, b: "hello"}', function(err, resp) {
+    Console.evaluateJS('undefined', function(err, resp) {
       assert.strictEqual(err, null);
-      assert.ok(resp.result.ownPropertyNames, "result has JSObject methods");
+      assert.ok(resp.result.type, "undefined");
       done();
     })
   })

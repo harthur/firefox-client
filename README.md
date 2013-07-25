@@ -47,12 +47,12 @@ A `FirefoxClient` is the entry point to the API. After connecting, get a `Tab` o
 Summary of the offerings of the modules and objects:
 
 #### FirefoxClient
-Methods: connect(), listTabs(), selectedTab()
+Methods: `connect()`, `listTabs()`, `selectedTab()`
 
 #### Tab
-Methods: reload(), navigateTo(), attach(), detach()
+Methods: `reload()`, `navigateTo()`, `attach()`, `detach()`
 
-Events: "navigate", "before-navigate"
+Events: `"navigate"`, `"before-navigate"`
 
 #### Tab.Console
 Methods: evaluateJS(), startListening(), stopListening(), getCachedLogs()
@@ -67,12 +67,12 @@ Methods: ownPropertyNames(), ownPropertyDescriptor(), ownProperties(), prototype
 #### Tab.Network
 Methods: startLogging(), stopLogging(), sendHTTPRequest()
 
-Events: "network-event"
+Events: `"network-event"`
 
 #### NetworkEvent
 Properties: url, method, isXHR
 
 Methods: getRequestHeaders(), getRequestCookies(), getRequestPostData(), getResponseHeaders(), getResponseCookies(), getResponseContent(), getEventTimings()
 
-Events: "update"
+Events: `"request-headers"`, `""`, `""`, `""`, `""`
 
