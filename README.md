@@ -59,6 +59,8 @@ Summary of the offerings of the modules and objects:
 Methods: `connect()`, `listTabs()`, `selectedTab()`
 
 #### [Tab](https://github.com/harthur/firefox-client/wiki/Tab)
+Properties: `url`, `title`
+
 Methods: `reload()`, `navigateTo()`, `attach()`, `detach()`
 
 Events: `"navigate"`, `"before-navigate"`
