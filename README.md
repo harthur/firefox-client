@@ -4,7 +4,9 @@
 ## Install
 With [node.js](http://nodejs.org/) npm package manager:
 
-	npm install firefox-client
+```bash
+npm install firefox-client
+```
 
 ## Connecting
 1. Enable remote debugging (You'll only have to do this once)
@@ -27,11 +29,7 @@ var client = new FirefoxClient();
 
 client.connect(6000, function() {
   client.listTabs(function(err, tabs) {
-    var tab = tabs[0];
-
-    tab.Console.evaluateJS("6 + 7", function(resp) {
-      console.log("result:", resp.result);
-    });
+    console.log("first tab:", tabs[0].url);
   });
 });
 ```
@@ -42,37 +40,48 @@ This library is compatible with [Firefox Nightly](http://nightly.mozilla.org/).
 
 ### API
 
-A `FirefoxClient` is the entry point to the API. After connecting, get a `Tab` object with `listTabs()` or `selectedTab()`. Once you have a `Tab`, you can call methods and listen to events from the tab's modules, `Console` or `Network`. There are also experimental tab modules `DOM` and `StyleSheets`, see their implementations in the `lib` directory.
+A `FirefoxClient` is the entry point to the API. After connecting, get a `Tab` object with `listTabs()` or `selectedTab()`. Once you have a `Tab`, you can call methods and listen to events from the tab's modules, `Console` or `Network`. There are also experimental tab modules `DOM` and `StyleSheets`, see their implementations in the lib directory.
+
+Almost all API calls take a callback that will get called with an error as the first argument (or `null` if there is no error), and a result as the second:
+
+```javascript
+tab.Console.evaluateJS("6 + 7", function(err, resp) {
+  if (err) {
+    throw err.message;
+  }
+  console.log(resp.result);
+});
+```
 
 Summary of the offerings of the modules and objects:
 
-#### FirefoxClient
+#### [FirefoxClient](http://github.com/harthur/firefox-client/wiki/FirefoxClient)
 Methods: `connect()`, `listTabs()`, `selectedTab()`
 
-#### Tab
+#### [Tab](https://github.com/harthur/firefox-client/wiki/Tab)
 Methods: `reload()`, `navigateTo()`, `attach()`, `detach()`
 
 Events: `"navigate"`, `"before-navigate"`
 
-#### Tab.Console
-Methods: evaluateJS(), startListening(), stopListening(), getCachedLogs()
+#### [Tab.Console](https://github.com/harthur/firefox-client/wiki/Console)
+Methods: `evaluateJS()`, `startListening()`, `stopListening()`, `getCachedLogs()`
 
-Events: "page-error", console-api-call"
+Events: `"page-error"`, `"console-api-call"`
 
-#### JSObject
-Properties: class, name, displayName
+#### [JSObject](https://github.com/harthur/firefox-client/wiki/JSObject)
+Properties: `class`, `name`, `displayName`
 
-Methods: ownPropertyNames(), ownPropertyDescriptor(), ownProperties(), prototype()
+Methods: `ownPropertyNames()`, `ownPropertyDescriptor()`, `ownProperties()`, `prototype()`
 
-#### Tab.Network
-Methods: startLogging(), stopLogging(), sendHTTPRequest()
+#### [Tab.Network](https://github.com/harthur/firefox-client/wiki/Network)
+Methods: `startLogging()`, `stopLogging()`, `sendHTTPRequest()`
 
 Events: `"network-event"`
 
-#### NetworkEvent
-Properties: url, method, isXHR
+#### [NetworkEvent](https://github.com/harthur/firefox-client/wiki/NetworkEvent)
+Properties: `url`, `method`, `isXHR`
 
-Methods: getRequestHeaders(), getRequestCookies(), getRequestPostData(), getResponseHeaders(), getResponseCookies(), getResponseContent(), getEventTimings()
+Methods: `getRequestHeaders()`, `getRequestCookies()`, `getRequestPostData()`, `getResponseHeaders()`, `getResponseCookies()`, `getResponseContent()`, `getEventTimings()`
 
-Events: `"request-headers"`, `""`, `""`, `""`, `""`
+Events: `"request-headers"`, `"request-cookies"`, `"request-postdata"`, `"response-start"`, `"response-headers"`, `"response-cookies"`, `"event-timings"`
 
