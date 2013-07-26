@@ -47,7 +47,7 @@ Almost all API calls take a callback that will get called with an error as the f
 ```javascript
 tab.Console.evaluateJS("6 + 7", function(err, resp) {
   if (err) {
-    throw err.message;
+    throw err;
   }
   console.log(resp.result);
 });
