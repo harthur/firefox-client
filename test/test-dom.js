@@ -258,3 +258,33 @@ describe('outerHTML()', function() {
     })
   })
 })
+
+/* MUST BE LAST */
+describe('remove()', function() {
+  it('should remove node', function(done) {
+    node.remove(function(err, nextSibling) {
+      assert.strictEqual(err, null);
+      assert.equal(nextSibling.getAttribute("id"), "test3");
+
+      doc.querySelectorAll(".item", function(err, list) {
+        assert.strictEqual(err, null);
+        assert.equal(list.length, 2);
+        done();
+      })
+    })
+  })
+
+  it("should err if performing further operations after release()", function(done) {
+    node.release(function(err) {
+      assert.strictEqual(err, null);
+
+      node.innerHTML(function(err, text) {
+        assert.equal(err.message, "TypeError: node is null")
+        assert.equal(err.toString(), "unknownError: TypeError: node is null");
+        done();
+      })
+    })
+  })
+})
+
+
