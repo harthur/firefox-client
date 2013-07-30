@@ -75,6 +75,20 @@ describe('prototype()', function() {
   })
 })
 
+describe('ownPropertiesAndPrototype()', function() {
+  it('should fetch properties and prototype', function(done) {
+    obj.ownPropertiesAndPrototype(function(err, resp) {
+      assert.strictEqual(err, null);
+      testDescriptor(resp.ownProperties.a);
+      assert.equal(resp.ownProperties.a.value, 2);
+
+      assert.ok(resp.prototype.ownProperties,
+                "prototype has JSObject methods");
+      done();
+    })
+  })
+})
+
 describe('Function objects', function() {
   it('sould have correct properties', function() {
     assert.equal(func.class, "Function");
