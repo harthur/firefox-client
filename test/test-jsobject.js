@@ -79,11 +79,26 @@ describe('ownPropertiesAndPrototype()', function() {
   it('should fetch properties and prototype', function(done) {
     obj.ownPropertiesAndPrototype(function(err, resp) {
       assert.strictEqual(err, null);
-      testDescriptor(resp.ownProperties.a);
-      assert.equal(resp.ownProperties.a.value, 2);
 
+      // own properties
+      var props = resp.ownProperties;
+      assert.equal(Object.keys(props).length, 2);
+
+      console.log(props);
+      testDescriptor(props.a);
+      assert.equal(props.a.value, 2);
+
+      // prototype
       assert.ok(resp.prototype.ownProperties,
                 "prototype has JSObject methods");
+
+      // getters
+      var getters = resp.safeGetterValues;
+      assert.equal(Object.keys(getters).length, 3);
+
+      assert.equal(getters.a.value, 2);
+      assert.equal(getters.a.prototypeLevel, 1);
+
       done();
     })
   })
