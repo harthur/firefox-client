@@ -12,7 +12,7 @@ before(function(done) {
     DOM = aTab.DOM;
     DOM.document(function(err, aDoc) {
       doc = aDoc;
-      doc.querySelectorAll(".item", function(err, list) {
+      DOM.querySelectorAll(".item", function(err, list) {
         list.items(function(err, items) {
           firstNode = items[0];
           node = items[1];
@@ -45,6 +45,36 @@ describe('documentElement()', function() {
       assert.equal(elem.nodeName, "HTML");
       assert.equal(elem.nodeType, 1);
       done();
+    })
+  })
+})
+
+describe('querySelector()', function() {
+  it('should get first item node', function(done) {
+    DOM.querySelector(".item", function(err, child) {
+      assert.strictEqual(err, null);
+      assert.equal(child.getAttribute("id"), "test1");
+      assert.ok(child.querySelector, "node has node methods");
+      done();
+    })
+  })
+})
+
+describe('querySelector()', function() {
+  it('should get all item nodes', function(done) {
+    DOM.querySelectorAll(".item", function(err, list) {
+      assert.strictEqual(err, null);
+      assert.equal(list.length, 3);
+
+      list.items(function(err, children) {
+        assert.strictEqual(err, null);
+        var ids = children.map(function(child) {
+          assert.ok(child.querySelector, "list item has node methods");
+          return child.getAttribute("id");
+        })
+        assert.deepEqual(ids, ["test1","test2","test3"]);
+        done();
+      })
     })
   })
 })
@@ -157,7 +187,7 @@ describe('querySelector()', function() {
     node.querySelector("*", function(err, child) {
       assert.strictEqual(err, null);
       assert.equal(child.getAttribute("id"), "child1");
-      assert.ok(child.querySelector, "parent has node methods");
+      assert.ok(child.querySelector, "node has node methods");
       done();
     })
   })
