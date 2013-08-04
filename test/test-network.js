@@ -56,15 +56,16 @@ describe('sendHTTPRequest()', function() {
 // event:update
 
 
-describe('getRequestHeaders(', function() {
+describe('getRequestHeaders()', function() {
   it('should get request headers', function(done) {
     Network.once('network-event', function(netEvent) {
+      assert.ok(netEvent);
       netEvent.on("request-headers", function(type, event) {
         assert.ok(event.headers);
         assert.ok(event.headersSize);
 
         netEvent.getRequestHeaders(function(err, resp) {
-          var found = resp.some(function(header) {
+          var found = resp.headers.some(function(header) {
             return header.name == "test-header" &&
                    header.value == "test-value";
           })
@@ -78,7 +79,7 @@ describe('getRequestHeaders(', function() {
 })
 
 // TODO: NetworkEvent tests
-
+;
 after(function() {
   Network.stopLogging(function(err) {
     assert.strictEqual(err, null);
