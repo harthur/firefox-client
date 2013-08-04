@@ -14,8 +14,12 @@
     "js-select": "~0.6.0"
   },
   "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.2",
+    "mocha": "~1.12.0",
     "connect": "~2.8.2",
-    "mocha": "~1.12.0"
+    "which": "~1.0.5",
+    "grunt-contrib-watch": "~0.5.1"
   },
   "keywords": [
     "firefox",
