@@ -1,8 +1,8 @@
 var net = require('net'),
-    extend = require("./extend"),
-    Client = require("./client"),
-    FirefoxClient = require("./browser");
+    Client = require("../lib/client"),
+    FirefoxClient = require("../lib/browser");
 
+var sockets = [];
 var clients = [];
 
 function passiveConnect(client, socket) {
@@ -18,13 +18,13 @@ function passiveConnect(client, socket) {
 }
 
 
-net.createServer(function (socket) {
-  clients.push(socket);
+var server = net.createServer(function (socket) {
+  sockets.push(socket);
 
   var tab_listed = false;
   var tab, Console;
 
-  console.log("Connected from " + socket + "\n");
+  //console.log("Connected from ", socket);
 
   socket.on('data', function (data) {
     if (!tab_listed) {
@@ -37,27 +37,23 @@ net.createServer(function (socket) {
       tab_listed = true;
       var firefox_client = new FirefoxClient();
       firefox_client.initialize(socket.client, 'root');
-      firefox_client.listTabs(function(err, tabs) {
-        console.log("REPLY", tabs[0]);
-        tab = tabs[0];
 
-        tab.attach(function () {
-          Console = tab.Console;
-          Console.evaluateJS("alert('ok');", function () { console.log("DUMP", arguments); });
-          Console.getCachedLogs(function (err, messages) {
-            console.log("MESSAGES: ", messages);
-          });
-        });
-      });
-    }
-    //console.log("DATA: "+data);
+      clients.push(firefox_client);
+      server.emit("connected", firefox_client);
+    };
   });
 
   socket.on('end', function () {
-    clients.splice(clients.indexOf(socket), 1);
-    console.log("CLOSE: "+socket.client.conn);
+    clients.splice(sockets.indexOf(socket), 1);
+    sockets.splice(sockets.indexOf(socket), 1);
+    console.log("CLOSED");
   });
-}).listen(5001);
+});
 
-// Put a friendly message on the terminal of the server.
-console.log("RDP server running at port 5001\n");
+server.exitConnectedClient = function(client) {
+  client.listTabs(function () {
+    client.RDPTestHelper.exitApp();
+  });
+};
+
+module.exports = server;

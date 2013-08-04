@@ -1,0 +1,3 @@
+[submodule "test/rdp-test-helper-jpext"]
+	path = test/rdp-test-helper-jpext
+	url = https://github.com/rpl/rdp-test-helper-jpext.git

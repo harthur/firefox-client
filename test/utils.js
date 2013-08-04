@@ -4,32 +4,17 @@ var assert = require('assert'),
 var tab;
 
 exports.loadTab = function(url, callback) {
-  getFirstTab(function(tab) {
-    tab.navigateTo(url);
-
-    tab.once("navigate", function() {
-      callback(tab);
-    });
-  })
-};
-
-
-function getFirstTab(callback) {
-  if (tab) {
-    return callback(tab);
-  }
   var client = new FirefoxClient();
 
   client.connect(function() {
     client.listTabs(function(err, tabs) {
-      if (err) throw err;
-
-      tab = tabs[0];
-
-      tab.attach(function(err) {
-        if (err) throw err;
-        callback(tab);
-      })
+      client.RDPTestHelper.openTab("localhost:3000/"+url, function (err, res) {
+        var tabIndex = res.tabIndex;
+        client.listTabs(function (err, tabs) {
+          var tab= tabs[tabIndex];
+          callback(tab);
+        });
+      });
     });
   });
-}
+};
