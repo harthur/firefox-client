@@ -47,7 +47,7 @@ This library is compatible with [Firefox Nightly](http://nightly.mozilla.org/).
 
 A `FirefoxClient` is the entry point to the API. After connecting, get a `Tab` object with `listTabs()` or `selectedTab()`. Once you have a `Tab`, you can call methods and listen to events from the tab's modules, `Console` or `Network`. There are also experimental tab modules `DOM` and `StyleSheets`, see their implementations in the lib directory.
 
-Almost all API calls take a callback that will get called with an error as the first argument (or `null` if there is no error), and a result as the second:
+Almost all API calls take a callback that will get called with an error as the first argument (or `null` if there is no error), and a return value as the second:
 
 ```javascript
 tab.Console.evaluateJS("6 + 7", function(err, resp) {
@@ -92,3 +92,10 @@ Methods: `getRequestHeaders()`, `getRequestCookies()`, `getRequestPostData()`, `
 
 Events: `"request-headers"`, `"request-cookies"`, `"request-postdata"`, `"response-start"`, `"response-headers"`, `"response-cookies"`, `"event-timings"`
 
+#### [Tab.DOM](https://github.com/harthur/firefox-client/wiki/DOM)
+Methods: `document()`, `documentElement()`, `querySelector()`, `querySelectorAll()`
+
+#### [DOMNode](https://github.com/harthur/firefox-client/wiki/DOMNode)
+Properties: `nodeValue`, `nodeName`, `namespaceURI`
+
+Methods: `parentNode()`, `parents()`, `siblings()`, `nextSibling()`, `previousSibling()`, `querySelector()`, `querySelectorAll()`, `innerHTML()`, `outerHTML()`, `setAttribute()`, `remove()`, `release()`
