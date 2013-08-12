@@ -45,7 +45,7 @@ This library is compatible with [Firefox Nightly](http://nightly.mozilla.org/).
 
 ### API
 
-A `FirefoxClient` is the entry point to the API. After connecting, get a `Tab` object with `listTabs()` or `selectedTab()`. Once you have a `Tab`, you can call methods and listen to events from the tab's modules, `Console` or `Network`. There are also experimental tab modules `DOM` and `StyleSheets`, see their implementations in the lib directory.
+A `FirefoxClient` is the entry point to the API. After connecting, get a `Tab` object with `listTabs()` or `selectedTab()`. Once you have a `Tab`, you can call methods and listen to events from the tab's modules, `Console` or `Network`. There are also experimental `DOM` and `StyleSheets` tab modules.
 
 Almost all API calls take a callback that will get called with an error as the first argument (or `null` if there is no error), and a return value as the second:
 
@@ -62,6 +62,8 @@ Summary of the offerings of the modules and objects:
 
 #### [FirefoxClient](http://github.com/harthur/firefox-client/wiki/FirefoxClient)
 Methods: `connect()`, `listTabs()`, `selectedTab()`
+
+Events: `"timeout"`, `"end"`
 
 #### [Tab](https://github.com/harthur/firefox-client/wiki/Tab)
 Properties: `url`, `title`
