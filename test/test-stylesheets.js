@@ -8,7 +8,7 @@ var styleSheet;
 before(function(done) {
   utils.loadTab('stylesheets.html', function(aTab) {
     StyleSheets = aTab.StyleSheets;
-    StyleSheets.listStyleSheets(function(err, sheets) {
+    StyleSheets.getStyleSheets(function(err, sheets) {
       assert.strictEqual(err, null);
       styleSheet = sheets[1];
       done();
@@ -16,11 +16,11 @@ before(function(done) {
   });
 });
 
-// Stylesheets - listStyleSheets(), addStyleSheet()
+// Stylesheets - getStyleSheets(), addStyleSheet()
 
-describe('listStyleSheets()', function() {
+describe('getStyleSheets()', function() {
   it('should list all the stylesheets', function(done) {
-    StyleSheets.listStyleSheets(function(err, sheets) {
+    StyleSheets.getStyleSheets(function(err, sheets) {
       assert.strictEqual(err, null);
 
       var hrefs = sheets.map(function(sheet) {
@@ -46,7 +46,7 @@ describe('addStyleSheet()', function() {
   })
 })
 
-// StyleSheet - update()
+// StyleSheet - update(), toggleDisabled()
 
 describe('StyleSheet', function() {
   it('should have the correct properties', function() {
@@ -63,6 +63,29 @@ describe('StyleSheet.update()', function() {
     styleSheet.update(text, function(err, resp) {
       assert.strictEqual(err, null);
       // TODO: assert.equal(styleSheet.ruleCount, 1);
+      done();
+    })
+  })
+})
+
+describe('StyleSheet.toggleDisabled()', function() {
+  it('should toggle disabled attribute', function(done) {
+    assert.deepEqual(styleSheet.disabled, false);
+
+    styleSheet.toggleDisabled(function(err, resp) {
+      assert.strictEqual(err, null);
+      assert.deepEqual(styleSheet.disabled, true);
+      done();
+    })
+  })
+
+  it('should fire disabled-changed event', function(done) {
+    styleSheet.toggleDisabled(function(err, resp) {
+      assert.strictEqual(err, null);
+      assert.deepEqual(styleSheet.disabled, false);
+    })
+    styleSheet.on("disabled-changed", function(disabled) {
+      assert.strictEqual(disabled, false);
       done();
     })
   })

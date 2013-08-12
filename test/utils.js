@@ -18,7 +18,7 @@ function getFirstTab(callback) {
   if (tab) {
     return callback(tab);
   }
-  var client = new FirefoxClient();
+  var client = new FirefoxClient({log: true});
 
   client.connect(function() {
     client.listTabs(function(err, tabs) {

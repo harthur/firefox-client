@@ -101,3 +101,16 @@ Methods: `document()`, `documentElement()`, `querySelector()`, `querySelectorAll
 Properties: `nodeValue`, `nodeName`, `namespaceURI`
 
 Methods: `parentNode()`, `parents()`, `siblings()`, `nextSibling()`, `previousSibling()`, `querySelector()`, `querySelectorAll()`, `innerHTML()`, `outerHTML()`, `setAttribute()`, `remove()`, `release()`
+
+#### [Tab.StyleSheets](https://github.com/harthur/firefox-client/wiki/StyleSheets)
+Methods: `getStyleSheets()`, `addStyleSheet()`
+
+#### [StyleSheet](https://github.com/harthur/firefox-client/wiki/StyleSheet)
+Properties: `href`, `disabled`, `ruleCount`
+
+Methods: `update()`, `toggleDisabled()`
+
+Events: `"disabled-changed"`, `"ruleCount-changed"`
+
+
+
