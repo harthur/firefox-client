@@ -9,7 +9,6 @@
     "url": "http://github.com/harthur/firefox-client.git"
   },
   "dependencies": {
-    "nomnom": "1.6.x",
     "colors": "0.5.x",
     "js-select": "~0.6.0"
   },
