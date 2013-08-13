@@ -43,7 +43,7 @@ client.connect(6000, function() {
 
 This library is compatible with [Firefox Nightly](http://nightly.mozilla.org/).
 
-### API
+## API
 
 A `FirefoxClient` is the entry point to the API. After connecting, get a `Tab` object with `listTabs()` or `selectedTab()`. Once you have a `Tab`, you can call methods and listen to events from the tab's modules, `Console` or `Network`. There are also experimental `DOM` and `StyleSheets` tab modules.
 
@@ -112,5 +112,6 @@ Methods: `update()`, `toggleDisabled()`
 
 Events: `"disabled-changed"`, `"ruleCount-changed"`
 
+## Examples
 
-
+[fxconsole](https://github.com/harthur/fxconsole) - a remote JavaScript console for Firefox
