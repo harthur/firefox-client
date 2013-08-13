@@ -71,7 +71,7 @@ tab.Console.on("page-error", function(event) {
 Summary of the offerings of the modules and objects:
 
 #### [FirefoxClient](http://github.com/harthur/firefox-client/wiki/FirefoxClient)
-Methods: `connect()`, `listTabs()`, `selectedTab()`
+Methods: `connect()`, `disconnect()`, `listTabs()`, `selectedTab()`
 
 Events: `"timeout"`, `"end"`
 
