@@ -1,5 +1,5 @@
 # firefox-client
-`firefox-client` is a [node](nodejs.org) library for remote debugging Firefox.
+`firefox-client` is a [node](nodejs.org) library for remote debugging Firefox. You can use it to make things like [fxconsole](https://github.com/harthur/fxconsole), a remote JavaScript REPL.
 
 ## Install
 With [node.js](http://nodejs.org/) npm package manager:
