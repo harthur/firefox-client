@@ -73,7 +73,7 @@ Summary of the offerings of the modules and objects:
 #### [FirefoxClient](http://github.com/harthur/firefox-client/wiki/FirefoxClient)
 Methods: `connect()`, `disconnect()`, `listTabs()`, `selectedTab()`
 
-Events: `"timeout"`, `"end"`
+Events: `"error"`, `"timeout"`, `"end"`
 
 #### [Tab](https://github.com/harthur/firefox-client/wiki/Tab)
 Properties: `url`, `title`
