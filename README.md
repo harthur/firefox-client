@@ -23,6 +23,11 @@ npm install firefox-client
 ### Firefox for Android
 Follow the instructions in [this Hacks video](https://www.youtube.com/watch?v=Znj_8IFeTVs)
 
+### Firefox OS Simulator
+A limited set of the API (`Console`, `StyleSheets`) is compatible with the [Simulator 4.0](https://addons.mozilla.org/en-US/firefox/addon/firefox-os-simulator/). See the [wiki instructions](https://github.com/harthur/firefox-client/wiki/Firefox-OS-Simulator-Instructions) for connecting.
+
+`client.listTabs()` will list the currently open apps in the Simulator.
+
 ## Usage
 
 Use firefox-client from your node program with:
