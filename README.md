@@ -41,11 +41,11 @@ client.connect(6000, function() {
 
 ## Compatibility
 
-This library is compatible with [Firefox Nightly](http://nightly.mozilla.org/).
+This latest version of the library will stay compatible with [Firefox Nightly](http://nightly.mozilla.org/). Almost all of it will be compatible with [Firefox Aurora](http://www.mozilla.org/en-US/firefox/aurora/) as well.
 
 ## API
 
-A `FirefoxClient` is the entry point to the API. After connecting, get a `Tab` object with `listTabs()` or `selectedTab()`. Once you have a `Tab`, you can call methods and listen to events from the tab's modules, `Console` or `Network`. There are also experimental `DOM` and `StyleSheets` tab modules.
+A `FirefoxClient` is the entry point to the API. After connecting, get a `Tab` object with `listTabs()` or `selectedTab()`. Once you have a `Tab`, you can call methods and listen to events from the tab's modules, `Console` or `Network`. There are also experimental `DOM` and `StyleSheets` tab modules, and an upcoming `Debugger` module.
 
 #### Methods
 Almost all API calls take a callback that will get called with an error as the first argument (or `null` if there is no error), and a return value as the second:
