@@ -58,16 +58,18 @@ describe('sendHTTPRequest()', function() {
 
 describe('getRequestHeaders(', function() {
   it('should get request headers', function(done) {
-    Network.once('network-event', function(netEvent) {
-      netEvent.on("request-headers", function(type, event) {
+    Network.on('network-event', function(netEvent) {
+      netEvent.on("request-headers", function(event) {
         assert.ok(event.headers);
         assert.ok(event.headersSize);
 
         netEvent.getRequestHeaders(function(err, resp) {
-          var found = resp.some(function(header) {
+          assert.strictEqual(err, null);
+
+          var found = resp.headers.some(function(header) {
             return header.name == "test-header" &&
                    header.value == "test-value";
-          })
+          });
           assert.ok(found, "contains that header we sent");
           done();
         })
