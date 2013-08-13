@@ -8,7 +8,7 @@ var func;
 before(function(done) {
   utils.loadTab('dom.html', function(aTab) {
     Console = aTab.Console;
-    Console.evaluateJS('x = {a: 2, b: {c: 3}}', function(err, resp) {
+    Console.evaluateJS('x = {a: 2, b: {c: 3}, get d() {return 4;}}', function(err, resp) {
       obj = resp.result;
 
       var input = 'y = function testfunc(a, b) { return a + b; }';
@@ -26,7 +26,7 @@ describe('ownPropertyNames()', function() {
   it('should fetch property names', function(done) {
     obj.ownPropertyNames(function(err, names) {
       assert.strictEqual(err, null);
-      assert.deepEqual(names, ['a', 'b']);
+      assert.deepEqual(names, ['a', 'b', 'd']);
       done();
     })
   })
@@ -76,15 +76,14 @@ describe('prototype()', function() {
 })
 
 describe('ownPropertiesAndPrototype()', function() {
-  it('should fetch properties and prototype', function(done) {
+  it('should fetch properties, prototype, and getters', function(done) {
     obj.ownPropertiesAndPrototype(function(err, resp) {
       assert.strictEqual(err, null);
 
       // own properties
       var props = resp.ownProperties;
-      assert.equal(Object.keys(props).length, 2);
+      assert.equal(Object.keys(props).length, 3);
 
-      console.log(props);
       testDescriptor(props.a);
       assert.equal(props.a.value, 2);
 
@@ -94,10 +93,7 @@ describe('ownPropertiesAndPrototype()', function() {
 
       // getters
       var getters = resp.safeGetterValues;
-      assert.equal(Object.keys(getters).length, 3);
-
-      assert.equal(getters.a.value, 2);
-      assert.equal(getters.a.prototypeLevel, 1);
+      assert.equal(Object.keys(getters).length, 0);
 
       done();
     })
