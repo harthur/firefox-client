@@ -1,6 +1,18 @@
 # firefox-client
 `firefox-client` is a [node](nodejs.org) library for remote debugging Firefox. You can use it to make things like [fxconsole](https://github.com/harthur/fxconsole), a remote JavaScript REPL.
 
+```javascript
+var FirefoxClient = require("firefox-client");
+
+var client = new FirefoxClient();
+
+client.connect(6000, function() {
+  client.listTabs(function(err, tabs) {
+    console.log("first tab:", tabs[0].url);
+  });
+});
+```
+
 ## Install
 With [node.js](http://nodejs.org/) npm package manager:
 
@@ -27,22 +39,6 @@ Follow the instructions in [this Hacks video](https://www.youtube.com/watch?v=Zn
 A limited set of the API (`Console`, `StyleSheets`) is compatible with the [Simulator 4.0](https://addons.mozilla.org/en-US/firefox/addon/firefox-os-simulator/). See the [wiki instructions](https://github.com/harthur/firefox-client/wiki/Firefox-OS-Simulator-Instructions) for connecting.
 
 `client.listTabs()` will list the currently open apps in the Simulator.
-
-## Usage
-
-Use firefox-client from your node program with:
-
-```javascript
-var FirefoxClient = require("firefox-client");
-
-var client = new FirefoxClient();
-
-client.connect(6000, function() {
-  client.listTabs(function(err, tabs) {
-    console.log("first tab:", tabs[0].url);
-  });
-});
-```
 
 ## Compatibility
 
