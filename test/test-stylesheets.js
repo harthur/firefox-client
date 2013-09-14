@@ -46,7 +46,7 @@ describe('addStyleSheet()', function() {
   })
 })
 
-// StyleSheet - update(), toggleDisabled()
+// StyleSheet - update(), toggleDisabled(), getSource()
 
 describe('StyleSheet', function() {
   it('should have the correct properties', function() {
@@ -87,6 +87,21 @@ describe('StyleSheet.toggleDisabled()', function() {
     styleSheet.on("disabled-changed", function(disabled) {
       assert.strictEqual(disabled, false);
       done();
+    })
+  })
+})
+
+describe('StyleSheet.getSource()', function() {
+  it('should get source of stylesheet', function(done) {
+    styleSheet.getSource(function(err, source) {
+      assert.strictEqual(err, null);
+
+      assert.equal(source.length, 94);
+      source.substring(20, 30, function(err, text) {
+        assert.strictEqual(err, null);
+        assert.equal(text, ": Georgia,");
+        done();
+      });
     })
   })
 })
