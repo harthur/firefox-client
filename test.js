@@ -2,7 +2,7 @@ var assert = require('assert'),
     FirefoxClient = require("./index");
 
 
-var url = "http://harthur.github.io/wwcode";
+var url = "file:///Users/harth/repos/sass-wwcode/index.html";
 
 loadUrl(url, function(tab) {
   tab.StyleSheets.getStyleSheets(function(err, sheets) {
