@@ -289,6 +289,15 @@ describe('outerHTML()', function() {
   })
 })
 
+describe('highlight()', function() {
+  it('should highlight node', function(done) {
+    node.highlight(function(err, resp) {
+      assert.strictEqual(err, null);
+      done();
+    })
+  })
+})
+
 /* MUST BE LAST */
 describe('remove()', function() {
   it('should remove node', function(done) {
