@@ -9,7 +9,11 @@ loadUrl(url, function(tab) {
     var sheet = sheets[1];
     sheet.getOriginalSources(function(err, sources) {
       console.log(err);
-      console.log(sources);
+      console.log(sources[0].url);
+      sources[0].getText(function(err, resp) {
+        console.log(err);
+        console.log(resp);
+      })
     });
     console.log(sheet.href);
   });
