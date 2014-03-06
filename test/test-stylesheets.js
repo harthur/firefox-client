@@ -5,6 +5,18 @@ var assert = require("assert"),
 var StyleSheets;
 var styleSheet;
 
+var SS_TEXT = [
+"main {",
+"  font-family: Georgia, sans-serif;",
+"  color: black;",
+"}",
+"",
+"* {",
+"  padding: 0;",
+"  margin: 0;",
+"}"
+].join("\n");
+
 before(function(done) {
   utils.loadTab('stylesheets.html', function(aTab) {
     StyleSheets = aTab.StyleSheets;
@@ -55,6 +67,16 @@ describe('StyleSheet', function() {
     assert.equal(styleSheet.ruleCount, 2);
   })
 })
+
+describe('StyleSheet.getText()', function() {
+  it('should get the text of the style sheet', function(done) {
+    styleSheet.getText(function(err, resp) {
+      assert.strictEqual(err, null);
+      assert.equal(resp, SS_TEXT);
+      done();
+    })
+  })
+});
 
 describe('StyleSheet.update()', function() {
   it('should update stylesheet', function(done) {

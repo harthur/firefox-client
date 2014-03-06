@@ -119,7 +119,7 @@ Methods: `getStyleSheets()`, `addStyleSheet()`
 #### [StyleSheet](https://github.com/harthur/firefox-client/wiki/StyleSheet)
 Properties: `href`, `disabled`, `ruleCount`
 
-Methods: `update()`, `toggleDisabled()`
+Methods: `getText()`, `update()`, `toggleDisabled()`, `getOriginalSources()`
 
 Events: `"disabled-changed"`, `"ruleCount-changed"`
 
