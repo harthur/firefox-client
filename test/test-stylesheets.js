@@ -90,3 +90,13 @@ describe('StyleSheet.toggleDisabled()', function() {
     })
   })
 })
+
+describe('StyleSheet.getOriginalSources()', function() {
+  it('should get no original sources', function(done) {
+    styleSheet.getOriginalSources(function(err, resp) {
+      assert.strictEqual(err, null);
+      assert.deepEqual(resp, []);
+      done();
+    })
+  })
+})
