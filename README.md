@@ -35,10 +35,25 @@ npm install firefox-client
 ### Firefox for Android
 Follow the instructions in [this Hacks video](https://www.youtube.com/watch?v=Znj_8IFeTVs)
 
-### Firefox OS Simulator
+### Firefox OS 1.1 Simulator
 A limited set of the API (`Console`, `StyleSheets`) is compatible with the [Simulator 4.0](https://addons.mozilla.org/en-US/firefox/addon/firefox-os-simulator/). See the [wiki instructions](https://github.com/harthur/firefox-client/wiki/Firefox-OS-Simulator-Instructions) for connecting.
 
 `client.listTabs()` will list the currently open apps in the Simulator.
+
+### Firefox OS 1.2+ Simulator and devices
+
+`client.getWebapps()` will expose the webapps in the Simulator, where each app implements the `Tab` API.
+
+```
+client.getWebapps(function(err, webapps) {
+  webapps.getApp("app://homescreen.gaiamobile.org/manifest.webapp", function (err, app) {
+    console.log("homescreen:", actor.url);
+    app.Console.evaluateJS("alert('foo')", function(err, resp) {
+      console.log("alert dismissed");
+    });
+  });
+});
+```
 
 ## Compatibility
 
@@ -72,7 +87,7 @@ tab.Console.on("page-error", function(event) {
 Summary of the offerings of the modules and objects:
 
 #### [FirefoxClient](http://github.com/harthur/firefox-client/wiki/FirefoxClient)
-Methods: `connect()`, `disconnect()`, `listTabs()`, `selectedTab()`
+Methods: `connect()`, `disconnect()`, `listTabs()`, `selectedTab()`, `getWebapps()`, `Root()`
 
 Events: `"error"`, `"timeout"`, `"end"`
 
@@ -123,9 +138,16 @@ Methods: `getText()`, `update()`, `toggleDisabled()`, `getOriginalSources()`
 
 Events: `"disabled-changed"`, `"ruleCount-changed"`
 
+#### Webapps
+Methods: `listRunningApps()`, `getInstalledApps()`, `watchApps()`, `unwatchApps()`, `launch()`, `close()`, `getApp()`, `installHosted()`, `installPackaged()`, `installPackagedWithADB()`, `uninstall()`
+
+Events: `"appOpen"`, `"appClose"`, `"appInstall"`, `"appUninstall"`
+
 ## Examples
 
 [fxconsole](https://github.com/harthur/fxconsole) - a remote JavaScript console for Firefox
+
+[webapps test script](https://pastebin.mozilla.org/5094843) - a sample usage of all webapps features
 
 ## Feedback
 
