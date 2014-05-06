@@ -7,7 +7,7 @@ var FirefoxClient = require("firefox-client");
 var client = new FirefoxClient();
 
 client.connect(6000, function() {
-  client.listTabs(function(err, tabs) {
+  client.listTabs(function(err, tabs, actors) {
     console.log("first tab:", tabs[0].url);
   });
 });
@@ -35,10 +35,26 @@ npm install firefox-client
 ### Firefox for Android
 Follow the instructions in [this Hacks video](https://www.youtube.com/watch?v=Znj_8IFeTVs)
 
-### Firefox OS Simulator
+### Firefox OS 1.1 Simulator
 A limited set of the API (`Console`, `StyleSheets`) is compatible with the [Simulator 4.0](https://addons.mozilla.org/en-US/firefox/addon/firefox-os-simulator/). See the [wiki instructions](https://github.com/harthur/firefox-client/wiki/Firefox-OS-Simulator-Instructions) for connecting.
 
 `client.listTabs()` will list the currently open apps in the Simulator.
+
+### Firefox OS 1.2+ Simulator and devices
+
+`client.listTabs()` will expose the webapps actor, with various utility function around webapps and also allows to have `Tab` instances for each running app.
+
+```
+client.listTabs(function(err, tabs, actors) {
+  var webapps = actors.webapps;
+  webapps.getAppActor("app://homescreen.gaiamobile.org/manifest.webapp", function (err, actor) {
+    console.log("homescreen:", actor.url);
+    actor.Console.evaluateJS("alert('foo')", function(err, resp) {
+      console.log("alert dismissed");
+    });
+  });
+});
+```
 
 ## Compatibility
 
@@ -123,9 +139,16 @@ Methods: `getText()`, `update()`, `toggleDisabled()`, `getOriginalSources()`
 
 Events: `"disabled-changed"`, `"ruleCount-changed"`
 
+#### Webapps
+Methods: `listRunningApps()`, `getInstalledApps()`, `watchApps()`, `unwatchApps()`, `launch()`, `close()`, `getAppActor()`, `installHosted()`, `installPackaged()`, `installPackagedWithADB()`, `uninstall()
+
+Events: `"appOpen"`, `"appClose"`, `"appInstall"`, `"appUninstall"`
+
 ## Examples
 
 [fxconsole](https://github.com/harthur/fxconsole) - a remote JavaScript console for Firefox
+
+[webapps test script](https://pastebin.mozilla.org/5094843) - a sample usage of all webapps features
 
 ## Feedback
 
