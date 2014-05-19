@@ -7,7 +7,7 @@ var FirefoxClient = require("firefox-client");
 var client = new FirefoxClient();
 
 client.connect(6000, function() {
-  client.listTabs(function(err, tabs, actors) {
+  client.listTabs(function(err, tabs) {
     console.log("first tab:", tabs[0].url);
   });
 });
@@ -42,14 +42,13 @@ A limited set of the API (`Console`, `StyleSheets`) is compatible with the [Simu
 
 ### Firefox OS 1.2+ Simulator and devices
 
-`client.listTabs()` will expose the webapps actor, with various utility function around webapps and also allows to have `Tab` instances for each running app.
+`client.listTabs()` will expose the webapp, with various utility function around webapps and also allows to have `Tab` instances for each running app.
 
 ```
-client.listTabs(function(err, tabs, actors) {
-  var webapps = actors.webapps;
-  webapps.getAppActor("app://homescreen.gaiamobile.org/manifest.webapp", function (err, actor) {
+client.Webapps(function(err, webapps) {
+  webapps.getApp("app://homescreen.gaiamobile.org/manifest.webapp", function (err, app) {
     console.log("homescreen:", actor.url);
-    actor.Console.evaluateJS("alert('foo')", function(err, resp) {
+    app.Console.evaluateJS("alert('foo')", function(err, resp) {
       console.log("alert dismissed");
     });
   });
@@ -88,7 +87,7 @@ tab.Console.on("page-error", function(event) {
 Summary of the offerings of the modules and objects:
 
 #### [FirefoxClient](http://github.com/harthur/firefox-client/wiki/FirefoxClient)
-Methods: `connect()`, `disconnect()`, `listTabs()`, `selectedTab()`
+Methods: `connect()`, `disconnect()`, `listTabs()`, `selectedTab()`, `Webapps()`, `Root()`
 
 Events: `"error"`, `"timeout"`, `"end"`
 
@@ -140,7 +139,7 @@ Methods: `getText()`, `update()`, `toggleDisabled()`, `getOriginalSources()`
 Events: `"disabled-changed"`, `"ruleCount-changed"`
 
 #### Webapps
-Methods: `listRunningApps()`, `getInstalledApps()`, `watchApps()`, `unwatchApps()`, `launch()`, `close()`, `getAppActor()`, `installHosted()`, `installPackaged()`, `installPackagedWithADB()`, `uninstall()
+Methods: `listRunningApps()`, `getInstalledApps()`, `watchApps()`, `unwatchApps()`, `launch()`, `close()`, `getApp()`, `installHosted()`, `installPackaged()`, `installPackagedWithADB()`, `uninstall()
 
 Events: `"appOpen"`, `"appClose"`, `"appInstall"`, `"appUninstall"`
 
