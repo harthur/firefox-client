@@ -45,7 +45,7 @@ A limited set of the API (`Console`, `StyleSheets`) is compatible with the [Simu
 `client.listTabs()` will expose the webapp, with various utility function around webapps and also allows to have `Tab` instances for each running app.
 
 ```
-client.Webapps(function(err, webapps) {
+client.getWebapps(function(err, webapps) {
   webapps.getApp("app://homescreen.gaiamobile.org/manifest.webapp", function (err, app) {
     console.log("homescreen:", actor.url);
     app.Console.evaluateJS("alert('foo')", function(err, resp) {
@@ -87,7 +87,7 @@ tab.Console.on("page-error", function(event) {
 Summary of the offerings of the modules and objects:
 
 #### [FirefoxClient](http://github.com/harthur/firefox-client/wiki/FirefoxClient)
-Methods: `connect()`, `disconnect()`, `listTabs()`, `selectedTab()`, `Webapps()`, `Root()`
+Methods: `connect()`, `disconnect()`, `listTabs()`, `selectedTab()`, `getWebapps()`, `Root()`
 
 Events: `"error"`, `"timeout"`, `"end"`
 
@@ -139,7 +139,7 @@ Methods: `getText()`, `update()`, `toggleDisabled()`, `getOriginalSources()`
 Events: `"disabled-changed"`, `"ruleCount-changed"`
 
 #### Webapps
-Methods: `listRunningApps()`, `getInstalledApps()`, `watchApps()`, `unwatchApps()`, `launch()`, `close()`, `getApp()`, `installHosted()`, `installPackaged()`, `installPackagedWithADB()`, `uninstall()
+Methods: `listRunningApps()`, `getInstalledApps()`, `watchApps()`, `unwatchApps()`, `launch()`, `close()`, `getApp()`, `installHosted()`, `installPackaged()`, `installPackagedWithADB()`, `uninstall()`
 
 Events: `"appOpen"`, `"appClose"`, `"appInstall"`, `"appUninstall"`
 
