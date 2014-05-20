@@ -138,6 +138,9 @@ Methods: `getText()`, `update()`, `toggleDisabled()`, `getOriginalSources()`
 
 Events: `"disabled-changed"`, `"ruleCount-changed"`
 
+#### Tab.Memory
+Methods: `measure()`
+
 #### Webapps
 Methods: `listRunningApps()`, `getInstalledApps()`, `watchApps()`, `unwatchApps()`, `launch()`, `close()`, `getApp()`, `installHosted()`, `installPackaged()`, `installPackagedWithADB()`, `uninstall()`
 
