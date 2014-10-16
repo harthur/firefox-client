@@ -4,21 +4,44 @@ var assert = require('assert'),
 
 var url = "file:///Users/harth/repos/sass-wwcode/index.html";
 
-loadUrl(url, function(tab) {
-  tab.StyleSheets.getStyleSheets(function(err, sheets) {
-    var sheet = sheets[1];
-    sheet.getOriginalSources(function(err, sources) {
-      console.log(err);
-      console.log(sources[0].url);
-      sources[0].getText(function(err, resp) {
-        console.log(err);
-        console.log(resp);
-      })
+getFirstTab(function(tab) {
+  tab.DOM.querySelector("#title", function(err, node) {
+    console.log("got node:", node.tagName);
+    tab.DOM.getUsedFontFaces(node, { includePreviews: true }, function(err, fonts) {
+      for (var i in fonts) {
+        var font = fonts[i];
+        console.log("first font", font);
+      }
     });
-    console.log(sheet.href);
-  });
-})
+  })
+});
 
+/*
+loadUrl(url, function(tab) {
+  tab.DOM.querySelector("#title", function(err, node) {
+    console.log("got node:", node.tagName);
+    tab.DOM.getUsedFontFaces(node, function(err, fonts) {
+      for (var i in fonts) {
+        var font = fonts[i];
+        console.log("first font", font);
+      }
+    });
+  })
+}) */
+
+/**
+{ fromFontGroup: true,
+    fromLanguagePrefs: false,
+    fromSystemFallback: false,
+    name: 'Georgia',
+    CSSFamilyName: 'Georgia',
+    rule: null,
+    srcIndex: -1,
+    URI: '',
+    localName: '',
+    format: '',
+    metadata: '' }
+*/
 
 /**
  * Helper functions
