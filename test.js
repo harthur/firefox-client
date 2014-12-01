@@ -2,7 +2,7 @@ var assert = require('assert'),
     FirefoxClient = require("./index");
 
 
-var url = "file:///Users/harth/repos/sass-wwcode/index.html";
+var url = "http://harthur.github.io/bugzilla-todos";
 
 getFirstTab(function(tab) {
   tab.DOM.querySelector("#title", function(err, node) {
@@ -42,6 +42,7 @@ loadUrl(url, function(tab) {
     format: '',
     metadata: '' }
 */
+
 
 /**
  * Helper functions
